@@ -43,6 +43,7 @@ public class Main {
 			switch (cmd) {
 			case 0:
 				keyboard.close();
+				System.exit(0);
 				break;
 			case 1:
 				greedy.setData(temp);
