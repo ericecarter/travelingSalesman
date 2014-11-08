@@ -55,7 +55,7 @@ public class GraphDrawer extends JFrame {
 		graph.getModel().beginUpdate();
 		try {
 			for (int i = 0; i < vertices.length; i++) {
-				String string = null;
+				String string;
 				first = vertices[i][0];
 				second = vertices[i][1];
 				string = getString(first, second, i);
