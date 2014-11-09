@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
 	private static final byte[][] data = new byte[120][2]; //holds all 120 cites
 	private static byte[][][] graphData; // array of vertices and edges
-	private static GeneticAlgorithm geneticAlgorithm = new GeneticAlgorithm();
+	private static Genetic genetic = new Genetic();
 	private static Greedy greedy = new Greedy();
 	private static InClassHeuristic inClassHeuristic = new InClassHeuristic();
 	private static SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing();
@@ -61,8 +61,8 @@ public class Main {
 				myGraphDrawer.drawGraph(graphData);
 				break;
 			case 4:
-				geneticAlgorithm.setData(temp);
-				graphData = geneticAlgorithm.doThisAlgorithm();
+				genetic.setData(temp);
+				graphData = genetic.doThisAlgorithm();
 				myGraphDrawer.drawGraph(graphData);
 				break;
 			case 5:

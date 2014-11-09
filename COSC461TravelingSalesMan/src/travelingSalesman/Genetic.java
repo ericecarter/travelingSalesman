@@ -1,9 +1,9 @@
 package travelingSalesman;
 
-public class GeneticAlgorithm {
+public class Genetic {
 	private byte [][] data;
 	
-	public GeneticAlgorithm (){
+	public Genetic (){
 		
 	}
 
