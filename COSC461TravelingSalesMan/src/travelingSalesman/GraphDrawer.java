@@ -1,5 +1,9 @@
 package travelingSalesman;
 
+/*This Class draws the graph on the screen.  Its main function receives a 
+ 3-d array; the first index of that array is the vertices, while the second
+ index of that array is the edges.*/
+
 import java.awt.Dimension;
 
 import javax.swing.JFrame;

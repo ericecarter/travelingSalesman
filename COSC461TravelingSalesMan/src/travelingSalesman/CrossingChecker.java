@@ -1,5 +1,9 @@
 package travelingSalesman;
 
+/*This class is used in the InClassHeuristic which is an adjusted
+ Uniform cost algorithm.  The difference is paths that cross other
+ paths already established are not considered.*/
+
 public class CrossingChecker {
 	public CrossingChecker() {
 	}

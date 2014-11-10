@@ -1,5 +1,7 @@
 package travelingSalesman;
 
+// This class generates the distance between all cities in a given data set.
+
 public class DistanceFinder {
 
 	public DistanceFinder() {

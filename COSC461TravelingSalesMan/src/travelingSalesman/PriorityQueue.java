@@ -1,13 +1,19 @@
 package travelingSalesman;
 
+/*Classes Uniform Cost and InClass Heuristic need a priority queue.
+ This class creates that queue.*/
+
 public class PriorityQueue {
-	private byte maxSize;
+	private int maxSize;
 	private Node[] queArray;
 	private int nItems;
 
 	public PriorityQueue(byte size) {
 		maxSize = size;
-		queArray = new Node[maxSize];
+		// the most nodes that could be in queue is number of size ^ 2
+		// this is the worst case scenario (size = number of cities being
+		// tested)
+		queArray = new Node[maxSize ^ 2];
 		nItems = 0;
 	}
 
@@ -36,8 +42,8 @@ public class PriorityQueue {
 	public boolean isEmpty() {
 		return (nItems == 0);
 	}
-	
-	public boolean isFull(){
-		return (nItems==maxSize);
+
+	public boolean isFull() {
+		return (nItems == maxSize);
 	}
 }

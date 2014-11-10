@@ -1,11 +1,14 @@
 package travelingSalesman;
 
+/*This Class carrys out the Greedy Algorithm.  It's primary function is to
+return a 3-D array that will be graphed.*/
+
 public class Greedy {
 	private byte[][] data;
 	private RandomNumberGenerator randomNumberGenerator;
 	private byte[] visitedCities;
 	private byte currentCity;
-	private byte originalCity;
+	private byte startingCity;
 	private VisitedCityFinder visitedCityFinder;
 	private DistanceFinder distanceFinder;
 	private byte[][][] allDistances;
@@ -64,7 +67,7 @@ public class Greedy {
 		byte[][][] results = new byte[2][data.length][data.length];
 		// the data coming in is all the vertices so just put that into
 		// results array
-		byte[][] vertices = data;
+		byte[][] vertices = data; // the cities are vertices on graph
 		results[0] = vertices;
 
 		// create a new byte array to place vertices' indexes when they have
@@ -77,7 +80,7 @@ public class Greedy {
 		// pick a random city to start at and add to visitedCities array
 		// also capture the original city so we can get back to it
 		currentCity = randomNumberGenerator.generateStartingNumber(data.length);
-		originalCity = currentCity;
+		startingCity = currentCity;
 		// add one to value to bypass the fact that array is initialized
 		// with all zeroes
 		visitedCities[count] = (byte) (currentCity + 1);
@@ -100,9 +103,9 @@ public class Greedy {
 			currentCity = closestCity;
 			visitedCities[++count] = (byte) (currentCity + 1);
 		}
-		// create an edge from last city to orginal city
-		byte[] newTuple = { currentCity, originalCity,
-				allDistances[currentCity][originalCity][0] };
+		// create an edge from last city to starting city
+		byte[] newTuple = { currentCity, startingCity,
+				allDistances[currentCity][startingCity][0] };
 		edges[count] = newTuple;
 
 		// add edges to results array
@@ -111,7 +114,8 @@ public class Greedy {
 		// Print out the total distance and starting city
 		System.out.println("\nThe total distance traveled is " + totalDistance);
 		System.out.println("The starting city was number "
-				+ String.valueOf(originalCity));
+				+ String.valueOf(startingCity));
+		System.out.println();
 
 		return results;
 	}
