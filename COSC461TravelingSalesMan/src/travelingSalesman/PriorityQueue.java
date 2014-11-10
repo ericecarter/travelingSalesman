@@ -10,10 +10,9 @@ public class PriorityQueue {
 
 	public PriorityQueue(byte size) {
 		maxSize = size;
-		// the most nodes that could be in queue is number of size ^ 2
-		// this is the worst case scenario (size = number of cities being
-		// tested)
-		queArray = new Node[maxSize ^ 2];
+		// the largest array my computer can handle is one with
+		// 8^9 slots
+		queArray = new Node[(int) Math.pow(8, 9)];
 		nItems = 0;
 	}
 

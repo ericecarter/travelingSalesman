@@ -15,6 +15,7 @@ public class UniformCost {
 
 	public UniformCost() {
 		distanceFinder = new DistanceFinder();
+		randomNumberGenerator = new RandomNumberGenerator();
 	}
 
 	public byte[][] getData() {
@@ -49,8 +50,8 @@ public class UniformCost {
 
 		// start with the solution node's city and work backwards
 		Node currentCity = solution;
-		
-		while (currentCity != null) { // end at root
+
+		while (currentCity.getParent() != null) { // end at root
 			// find the index of the start and end cities
 			start = cityFinder.findCity(currentCity.getParent().getCity());
 			end = cityFinder.findCity(currentCity.getCity());
@@ -75,9 +76,34 @@ public class UniformCost {
 	 */
 
 	private Node uniformCostSearch(Node root) {
+		// instantiate the frontier generator
+		frontierGenerator = new FrontierGenerator(data);
+		
+		// instantiate the frontier itself
+		frontier = new PriorityQueue((byte) data.length);
+		
+		// update the frontier with the new root node
 		frontierGenerator.updateFrontier(frontier, root);
+		Node current;
 
-		return null;
+		do {
+			if (frontier.isEmpty())
+				return null;
+			else {
+				// choose the lowest cost node from top of queue
+				current = frontier.remove();
+
+				// if that node has visited all the cities or
+				// its visited cities array size is equal to the
+				// data array size return the solution
+				if (current.allVisited()) {
+					return current;
+				}
+				else{
+					frontierGenerator.updateFrontier(frontier, current);
+				}
+			}
+		} while (true);
 	}
 
 	public byte[][][] doThisAlgorithm() {
@@ -102,7 +128,7 @@ public class UniformCost {
 		 * the node's visited city array should have the original city in it the
 		 * constructer for a new Node does this
 		 */
-		root = new Node(null, (byte) 0, startingCity);
+		root = new Node(data, startingCity);
 
 		// next start the seach which will end in a solution
 		solution = uniformCostSearch(root);
