@@ -4,7 +4,6 @@ public class UniformCost {
 	private byte[][] data;
 	private PriorityQueue frontier;
 	private CityFinder cityFinder;
-	private RandomNumberGenerator randomNumberGenerator;
 	private FrontierGenerator frontierGenerator;
 	private DistanceFinder distanceFinder;
 	private byte[][][] allDistances;
@@ -15,7 +14,6 @@ public class UniformCost {
 
 	public UniformCost() {
 		distanceFinder = new DistanceFinder();
-		randomNumberGenerator = new RandomNumberGenerator();
 	}
 
 	public byte[][] getData() {
@@ -78,10 +76,10 @@ public class UniformCost {
 	private Node uniformCostSearch(Node root) {
 		// instantiate the frontier generator
 		frontierGenerator = new FrontierGenerator(data);
-		
+
 		// instantiate the frontier itself
 		frontier = new PriorityQueue((byte) data.length);
-		
+
 		// update the frontier with the new root node
 		frontierGenerator.updateFrontier(frontier, root);
 		Node current;
@@ -98,8 +96,7 @@ public class UniformCost {
 				// data array size return the solution
 				if (current.allVisited()) {
 					return current;
-				}
-				else{
+				} else {
 					frontierGenerator.updateFrontier(frontier, current);
 				}
 			}
@@ -118,9 +115,8 @@ public class UniformCost {
 		byte[][] vertices = data; // the cities are vertices on graph
 		results[0] = vertices;
 
-		// the starting city is randomly chosen
-		startingCity = data[randomNumberGenerator
-				.generateStartingNumber(data.length)];
+		// the starting city is the first city
+		startingCity = data[0];
 
 		/*
 		 * create a new node to serve as the root its parent is null, distance
@@ -148,6 +144,10 @@ public class UniformCost {
 
 		// add the last edge to the edge array
 		edges[data.length - 1] = newTuple;
+
+		// update total distance
+		totalDistance += allDistances[cityFinder.findCity(solution.getCity())][cityFinder
+				.findCity(startingCity)][0];
 
 		// add edges to results array
 		results[1] = edges;

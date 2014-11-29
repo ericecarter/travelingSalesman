@@ -10,6 +10,7 @@ public class FrontierGenerator {
 	private DistanceFinder distanceFinder;
 	private byte[][][] allDistances;
 	private CityFinder cityFinder;
+	private CrossingChecker crossingChecker;
 
 	public FrontierGenerator(byte[][] data) {
 		visitedCityFinder = new VisitedCityFinder();
@@ -17,6 +18,7 @@ public class FrontierGenerator {
 		distanceFinder = new DistanceFinder();
 		allDistances = distanceFinder.findAllDistances(data);
 		cityFinder = new CityFinder(data);
+		crossingChecker = new CrossingChecker();
 	}
 
 	public void updateFrontier(PriorityQueue priorityQueue, Node currentCity) {
@@ -32,6 +34,25 @@ public class FrontierGenerator {
 				Node newNode = new Node(currentCity, allDistances[index][i][0],
 						data[i]);
 				priorityQueue.insert(newNode);
+			}
+		}
+	}
+	
+	public void updateFrontierCross(PriorityQueue priorityQueue, Node currentCity) {
+		byte index; // index used to find the parentNode's city
+
+		// traverse through data to find the city
+		index = cityFinder.findCity(currentCity.getCity());
+
+		// traverse through data, adding nodes with unvisited cities
+		// also check if we have found a cross
+		for (byte i = 0; i < data.length; i++) {
+			if (!visitedCityFinder.hasCityBeenVisited(
+					currentCity.getVisitedCities(), data[i])&&
+					!crossingChecker.foundACross(currentCity,data[i])) {
+				Node newNode = new Node(currentCity, allDistances[index][i][0],
+						data[i]);
+				priorityQueue.insert(newNode);//insert node based on its cost
 			}
 		}
 	}

@@ -1,11 +1,10 @@
 package travelingSalesman;
 
-/*This Class carrys out the Greedy Algorithm.  It's primary function is to
+/*This Class carrys out the Greedy Algorithm.  Its primary function is to
 return a 3-D array that will be graphed.*/
 
 public class Greedy {
 	private byte[][] data;
-	private RandomNumberGenerator randomNumberGenerator;
 	private byte[] visitedCities;
 	private byte currentCity;
 	private byte startingCity;
@@ -15,7 +14,6 @@ public class Greedy {
 	private int totalDistance;
 
 	public Greedy() {
-		randomNumberGenerator = new RandomNumberGenerator();
 		visitedCityFinder = new VisitedCityFinder();
 		distanceFinder = new DistanceFinder();
 	}
@@ -28,6 +26,8 @@ public class Greedy {
 		this.data = data;
 	}
 
+	// this method returns the index, in the data array, of the nearest
+	// city to the city passed as an argument
 	private byte findNearestUnVisitedCity(byte currentCity) {
 		byte indexOfNearestCity = 0;
 		byte currentDistanceLength = Byte.MAX_VALUE;
@@ -77,9 +77,9 @@ public class Greedy {
 		// [edge number][starting vertex, finishing vertex, distance]
 		byte[][] edges = new byte[data.length][3];
 
-		// pick a random city to start at and add to visitedCities array
+		// pick city 0 to start at and add to visitedCities array
 		// also capture the original city so we can get back to it
-		currentCity = randomNumberGenerator.generateStartingNumber(data.length);
+		currentCity = 0;
 		startingCity = currentCity;
 		// add one to value to bypass the fact that array is initialized
 		// with all zeroes
@@ -107,6 +107,8 @@ public class Greedy {
 		byte[] newTuple = { currentCity, startingCity,
 				allDistances[currentCity][startingCity][0] };
 		edges[count] = newTuple;
+		
+		totalDistance += allDistances[currentCity][startingCity][0];
 
 		// add edges to results array
 		results[1] = edges;

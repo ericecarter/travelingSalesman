@@ -13,6 +13,8 @@ public class Main {
 	private static SimulatedAnnealing simulatedAnnealing = new SimulatedAnnealing();
 	private static UniformCost uniformCost = new UniformCost();
 	private static GraphDrawer myGraphDrawer = new GraphDrawer();
+	private static long start;
+	private static long stop;
 	
 	public static void main(String[] args) {
 		readInFile(); // read in data from txt file
@@ -47,30 +49,42 @@ public class Main {
 				break;
 			case 1:
 				greedy.setData(temp);
+				start = System.currentTimeMillis();
 				graphData = greedy.doThisAlgorithm();
+				stop = System.currentTimeMillis();
 				myGraphDrawer.drawGraph(graphData);
 				break;
 			case 2:
 				uniformCost.setData(temp);
+				start = System.currentTimeMillis();
 				graphData = uniformCost.doThisAlgorithm();
+				stop = System.currentTimeMillis();
 				myGraphDrawer.drawGraph(graphData);
 				break;
 			case 3:
 				inClassHeuristic.setData(temp);
+				start = System.currentTimeMillis();
 				graphData = inClassHeuristic.doThisAlgorithm();
+				stop = System.currentTimeMillis();
 				myGraphDrawer.drawGraph(graphData);
 				break;
 			case 4:
 				genetic.setData(temp);
+				start = System.currentTimeMillis();
 				graphData = genetic.doThisAlgorithm();
+				stop = System.currentTimeMillis();
 				myGraphDrawer.drawGraph(graphData);
 				break;
 			case 5:
 				simulatedAnnealing.setData(temp);
+				start = System.currentTimeMillis();
 				graphData = simulatedAnnealing.doThisAlgorithm();
+				stop = System.currentTimeMillis();
 				myGraphDrawer.drawGraph(graphData);
 				break;
-			}		
+			}
+			System.out.println("The time to complete the algorithm was: "
+					+ (stop-start) + " milliseconds.");
 		}
 	}
 
