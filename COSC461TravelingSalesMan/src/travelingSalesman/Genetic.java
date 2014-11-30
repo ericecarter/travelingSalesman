@@ -5,10 +5,11 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Genetic {
-	private static final int POPULATION_SIZE = 25;
+	private static final int NUMBER_OF_TIMES_TO_DO_ALGORITHM = 10;
+	private static final int POPULATION_SIZE = 20;
 	private static final int SAMPLE_POP_SIZE = 5;
 	private static final double MUTATION_RATE = 0.015;
-	private static final int NUMBER_OF_GENERATIONS = 1500000;
+	private static final int NUMBER_OF_GENERATIONS = 100000;
 
 	private static byte[][] data;
 	private static DistanceFinder distanceFinder;
@@ -45,12 +46,14 @@ public class Genetic {
 		int bestTourCost = Integer.MAX_VALUE;
 		byte[] bestTour = new byte[data.length + 1];
 
-		for (int p = 0; p < 10; p++) {
+		for (int p = 0; p < NUMBER_OF_TIMES_TO_DO_ALGORITHM; p++) {
+
 			// create the initial population
 			population = generatePopulation();
 
 			// evolve the population for the number of generation
 			for (int i = 0; i < NUMBER_OF_GENERATIONS; i++) {
+
 				int weakestIndex = weakestLink(population); // find most unfit
 				byte[] parent1 = findFitParent(population); // find suitable
 															// parents

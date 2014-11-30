@@ -5,11 +5,14 @@ import java.util.Collections;
 import java.util.Random;
 
 public class SimulatedAnnealing {
+	private static final int ROUNDS = 1500000;
+	private static final int NUMBER_OF_TIMES_TO_DO_ALGORITHM = 200;
+	private static int temperature = 60;
+
 	private static byte[][] data; // the cities to be tested
 	private static DistanceFinder distanceFinder;
 	private static byte[][][] allDistances;
 	private static Random random;
-	private static int currentTemperature, numberOfTours;
 
 	public SimulatedAnnealing() {
 		distanceFinder = new DistanceFinder();
@@ -39,7 +42,7 @@ public class SimulatedAnnealing {
 		results[0] = vertices;
 		byte[] bestTour = new byte[data.length + 1];
 
-		for (int p = 0; p < 40; p++) {
+		for (int p = 0; p < NUMBER_OF_TIMES_TO_DO_ALGORITHM; p++) {
 			// this byte array holds the indexs in order of how the cities
 			// are visited. Index 0 is the starting city and index
 			// data.length is the final city
@@ -53,11 +56,9 @@ public class SimulatedAnnealing {
 			currentTour = setupTour();
 
 			// set the temperature and number of tours at each "degree"
-			currentTemperature = 45;
-			numberOfTours = 400000;
 
-			while (currentTemperature > 0) {
-				for (int i = 0; i < numberOfTours; i++) {
+			while (temperature > 0) {
+				for (int i = 0; i < ROUNDS; i++) {
 					byte[] next = findNextTour(currentTour);
 					int costOfCurrent = findCost(currentTour);
 					int costOfNext = findCost(next);
@@ -68,12 +69,12 @@ public class SimulatedAnnealing {
 					} else {
 						if ((double) Math
 								.exp(((double) costOfCurrent - (double) costOfNext)
-										/ (double) currentTemperature) > random
+										/ (double) temperature) > random
 								.nextDouble())
 							currentTour = next;
 					}
 				}
-				currentTemperature--; // decrease temperature
+				temperature--; // decrease temperature
 			}
 
 			if (findCost(currentTour) < bestTourCost) {
@@ -83,7 +84,7 @@ public class SimulatedAnnealing {
 		}
 		// add edges to results so it can be graphed
 		results[1] = setUpEdges(bestTour);
-		
+
 		// print out the found cost
 		System.out.println("The cost is " + findCost(bestTour));
 		return results;
